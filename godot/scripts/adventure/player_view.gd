@@ -25,8 +25,8 @@ extends InfoView
 var player: Player
 
 
-func _init(p_gurk: Gurk, p_player: Player) -> void:
-	super(p_gurk, "X")
+func _init(p_ruik: Ruik, p_player: Player) -> void:
+	super(p_ruik, "X")
 	player = p_player
 	set_button(7, "BACK")
 	set_button(9, "EXIT")
@@ -80,14 +80,14 @@ func _add_attribute(label: String, value: int, bonus_label: String, y: int) -> i
 func command(text: String) -> void:
 	match text:
 		"ITEMS":
-			gurk.push_view(ItemView.new(gurk, player, ItemView.ACTION_INFO))
+			ruik.push_view(ItemView.new(ruik, player, ItemView.ACTION_INFO))
 		"GEAR":
-			gurk.push_view(GearView.new(gurk, player))
+			ruik.push_view(GearView.new(ruik, player))
 		"SPELLS", "CAST/USE":
-			gurk.push_view(SpellView.new(gurk, player))
+			ruik.push_view(SpellView.new(ruik, player))
 		"USE":
-			gurk.push_view(ItemView.new(gurk, player, ItemView.ACTION_USE, false))
+			ruik.push_view(ItemView.new(ruik, player, ItemView.ACTION_USE, false))
 		"BACK":
-			gurk.pop_view(null)
+			ruik.pop_view(null)
 		"EXIT":
-			gurk.pop_to_top_view(null)
+			ruik.pop_to_top_view(null)

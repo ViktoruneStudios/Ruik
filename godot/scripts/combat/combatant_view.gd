@@ -25,8 +25,8 @@ extends FlowView
 var combatant: Combatant
 
 
-func _init(p_gurk: Gurk, p_combatant: Combatant) -> void:
-	super(p_gurk, p_combatant.get_icon(), p_combatant.get_name(), null)
+func _init(p_ruik: Ruik, p_combatant: Combatant) -> void:
+	super(p_ruik, p_combatant.get_icon(), p_combatant.get_name(), null)
 	combatant = p_combatant
 	add_paragraph("Hit Points: %d/%d" % [combatant.hit_points, combatant.get_max_hit_points()], "#FFF")
 	if combatant.is_player and combatant.entity.max_spell_points > 0:
@@ -45,12 +45,12 @@ func _init(p_gurk: Gurk, p_combatant: Combatant) -> void:
 
 func command(text: String) -> void:
 	if text == "EFFECTS":
-		var flow := FlowView.new(gurk, combatant.get_icon(), "Combat Effects", null)
+		var flow := FlowView.new(ruik, combatant.get_icon(), "Combat Effects", null)
 		for effect in combatant.effects:
 			if combatant.effects[effect] != null:
 				flow.add_paragraph(effect, "#FFF")
 				flow.add_paragraph(Data.effects.get(effect, ""), "#A0A0A0")
 				flow.add_gap()
-		gurk.push_view(flow)
+		ruik.push_view(flow)
 	else:
 		super(text)

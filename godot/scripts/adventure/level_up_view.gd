@@ -25,11 +25,11 @@ extends InfoView
 var next_action
 
 
-func _init(p_gurk: Gurk, upgrades: Array, p_next_action) -> void:
-	super(p_gurk, "OK")
+func _init(p_ruik: Ruik, upgrades: Array, p_next_action) -> void:
+	super(p_ruik, "OK")
 	next_action = p_next_action
 	var y := AlertView.ICON_Y
-	var text_x := AlertView.ICON_X * 2 + GurkScreen.UNIT
+	var text_x := AlertView.ICON_X * 2 + RuikScreen.UNIT
 	add_label_centered("Levelling Up", "#FFF", 0, y, 128, y + 8)
 	y += 12
 	for upgrade in upgrades:
@@ -53,4 +53,4 @@ func _init(p_gurk: Gurk, upgrades: Array, p_next_action) -> void:
 
 
 func command(_text: String) -> void:
-	gurk.pop_view(next_action)
+	ruik.pop_view(next_action)

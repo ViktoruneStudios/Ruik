@@ -28,8 +28,8 @@ var blurb_y := 0
 var character: Dictionary
 
 
-func _init(p_gurk: Gurk, p_character: Dictionary) -> void:
-	super(p_gurk, "BACK")
+func _init(p_ruik: Ruik, p_character: Dictionary) -> void:
+	super(p_ruik, "BACK")
 	character = p_character
 	add_icon(character.icon, 3, 3)
 	var y := 4

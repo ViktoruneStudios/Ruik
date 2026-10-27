@@ -26,7 +26,7 @@ extends Control
 ##   4 5 6
 ##   7 8 9
 
-const GURKOID_GLYPHS := {
+const RUIKOID_GLYPHS := {
 	"A": Rect2i(1, 1, 5, 9), "B": Rect2i(6, 1, 5, 9), "C": Rect2i(11, 1, 5, 9),
 	"D": Rect2i(16, 1, 5, 9), "E": Rect2i(21, 1, 4, 9), "F": Rect2i(25, 1, 4, 9),
 	"G": Rect2i(29, 1, 5, 9), "H": Rect2i(34, 1, 5, 9), "I": Rect2i(39, 1, 4, 9),
@@ -48,21 +48,21 @@ const GAP_Y := 11
 const GRID_WIDTH := 159
 const GRID_HEIGHT := 113
 
-var font: GurkFont
+var font: RuikFont
 var on_image: Texture2D
 var off_image: Texture2D
 var top_image: Texture2D
-var gurk: Gurk
+var ruik: Ruik
 
 ## buttons[y][x] = {"x", "y", "on", "text"}
 var buttons: Array = []
 
 
-func _init(p_gurk: Gurk) -> void:
-	gurk = p_gurk
+func _init(p_ruik: Ruik) -> void:
+	ruik = p_ruik
 	size = Vector2(GRID_WIDTH, GRID_HEIGHT)
 	custom_minimum_size = size
-	font = GurkFont.new(GURKOID_GLYPHS, load("res://assets/images/font_gurkoid.png"))
+	font = RuikFont.new(RUIKOID_GLYPHS, load("res://assets/images/font_ruikoid.png"))
 	on_image = load("res://assets/images/button.png")
 	off_image = load("res://assets/images/buttonoff.png")
 	top_image = load("res://assets/images/buttontop.png")
@@ -111,7 +111,7 @@ func clicked(point: Vector2) -> void:
 	var y := clampi(int(floor(point.y * 3 / GRID_HEIGHT)), 0, 2)
 	var button: Dictionary = buttons[y][x]
 	if button.on:
-		gurk.button_pressed(button.text)
+		ruik.button_pressed(button.text)
 
 
 func get_button_by_key_num(key_num: int) -> Dictionary:
@@ -122,7 +122,7 @@ func get_button_by_key_num(key_num: int) -> Dictionary:
 func force_click(key_num: int) -> void:
 	var button := get_button_by_key_num(key_num)
 	if button.on:
-		gurk.button_pressed(button.text)
+		ruik.button_pressed(button.text)
 
 
 func redraw() -> void:

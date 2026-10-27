@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 # -----------------------------------------------------------------------------
-class_name Gurk
+class_name Ruik
 extends Control
 ## Entry point: builds the screen and button grid, owns the view stack, and
 ## handles input, sound, music and timers.
@@ -31,7 +31,7 @@ const SOUND_VOLUME_DB := -12.0 # The web version played effects at 25% volume.
 
 var stack: Array = []
 var view: View = null
-var screen: GurkScreen
+var screen: RuikScreen
 var button_grid: ButtonGrid
 var game: Game = null
 var image_processor: ImageProcessor
@@ -44,7 +44,7 @@ var _sound_players: Dictionary = {}
 
 func _ready() -> void:
 	randomize()
-	screen = GurkScreen.new()
+	screen = RuikScreen.new()
 	screen.position = SCREEN_POSITION
 	add_child(screen)
 	button_grid = ButtonGrid.new(self)
@@ -243,7 +243,7 @@ func _play_track(track) -> void:
 
 # --- View stack --------------------------------------------------------------
 
-func get_screen() -> GurkScreen:
+func get_screen() -> RuikScreen:
 	return screen
 
 

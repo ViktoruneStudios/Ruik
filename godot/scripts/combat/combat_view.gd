@@ -88,14 +88,14 @@ var image_processor: ImageProcessor
 var strategy: BasicStrategy
 
 
-func _init(p_gurk: Gurk, p_map_name: String, p_image_processor: ImageProcessor, creatures: Array, ambushed: bool) -> void:
-	super(p_gurk, p_map_name)
+func _init(p_ruik: Ruik, p_map_name: String, p_image_processor: ImageProcessor, creatures: Array, ambushed: bool) -> void:
+	super(p_ruik, p_map_name)
 	image_processor = p_image_processor
-	if gurk.get_fast_setting():
+	if ruik.get_fast_setting():
 		combat_speed = FAST_SPEED
 		pause_time = FAST_PAUSE
 	strategy = BasicStrategy.new(self)
-	offset_x = -GurkScreen.HALF_UNIT
+	offset_x = -RuikScreen.HALF_UNIT
 	combatants = []
 	combat_map = {}
 	queue = []
@@ -128,7 +128,7 @@ func command(text: String) -> void:
 	else:
 		match text:
 			"OK":
-				gurk.pop_view(null)
+				ruik.pop_view(null)
 			"ATT/FIRE", "ATTACK", "FIRE":
 				is_firing = text == "FIRE"
 				start_player_attack()
@@ -162,7 +162,7 @@ func command(text: String) -> void:
 				else:
 					combatant = get_combatant(select_x, select_y)
 				if combatant != null:
-					gurk.push_view(CombatantView.new(gurk, combatant))
+					ruik.push_view(CombatantView.new(ruik, combatant))
 
 
 func log_action(_text) -> void:
@@ -202,11 +202,11 @@ func add_pause(info = null) -> void:
 
 
 func add_sound(sound: String, info = null) -> void:
-	add_action(func(): gurk.play_sound(sound), info)
+	add_action(func(): ruik.play_sound(sound), info)
 
 
 func do_pause() -> void:
-	gurk.set_timeout(next_action, pause_time)
+	ruik.set_timeout(next_action, pause_time)
 
 
 func get_custom_animation(sx: int, sy: int, tx: int, ty: int, animation) -> Texture2D:
@@ -329,9 +329,9 @@ func check_for_win() -> bool:
 func start_turn() -> void:
 	# Check for end-of-combat scenarios
 	if check_for_loss():
-		gurk.pop_view("defeat")
+		ruik.pop_view("defeat")
 	elif check_for_win():
-		gurk.pop_view("victory")
+		ruik.pop_view("victory")
 	else:
 		var combatant: Combatant = combatants[current]
 		combatant.start_turn()
@@ -357,10 +357,10 @@ func start_player_turn() -> void:
 	area_spell = false
 	area_attack = false
 	if check_for_loss():
-		gurk.pop_view("defeat")
+		ruik.pop_view("defeat")
 		return
 	elif check_for_win():
-		gurk.pop_view("victory")
+		ruik.pop_view("victory")
 		return
 	var player: Combatant = combatants[current]
 	select(player.x, player.y, SELECT_ACTIVE)
@@ -584,20 +584,20 @@ func start_player_cast() -> void:
 	drain_amount = 0
 	var player: Combatant = combatants[current]
 	selecting_item_for_use = true
-	gurk.push_view(SpellView.new(gurk, player.entity, true, can_attack_melee(player), can_summon(player), player))
+	ruik.push_view(SpellView.new(ruik, player.entity, true, can_attack_melee(player), can_summon(player), player))
 
 
 func start_player_use() -> void:
 	area_spell = false
 	var player: Combatant = combatants[current]
 	selecting_item_for_use = true
-	gurk.push_view(ItemView.new(gurk, player.entity, ItemView.ACTION_USE, true, can_attack_melee(player), can_summon(player), player))
+	ruik.push_view(ItemView.new(ruik, player.entity, ItemView.ACTION_USE, true, can_attack_melee(player), can_summon(player), player))
 
 
 func start_player_wield() -> void:
 	var player = combatants[current].entity
 	selecting_item_for_use = false
-	gurk.push_view(ItemView.new(gurk, player, ItemView.ACTION_EQUIP, 0, true))
+	ruik.push_view(ItemView.new(ruik, player, ItemView.ACTION_EQUIP, 0, true))
 
 
 func do_player_cast() -> void:
@@ -1002,7 +1002,7 @@ func add_creatures(creatures: Array) -> void:
 
 func add_players() -> void:
 	var index := 0
-	for player in gurk.game.players:
+	for player in ruik.game.players:
 		if player.is_alive():
 			var spot: Vector2i = FORMATION[index]
 			add_combatant(Combatant.new(player, true, true, spot.x, spot.y))
@@ -1295,7 +1295,7 @@ func can_use(combatant: Combatant, melee: bool, summon: bool) -> bool:
 func process_result(result) -> void:
 	if Util.eq(result, "debug1"):
 		# Automatically win combat
-		gurk.pop_view("victory")
+		ruik.pop_view("victory")
 	elif Util.eq(result, "debug2"):
 		queue_block_animation(4, 4, 1, Data.icons.animHit, "Test Block Animation")
 		next_action()

@@ -31,8 +31,8 @@ static func slot_icon(index: int):
 	return icons[clampi(index, 0, icons.size() - 1)]
 
 
-func _init(p_gurk: Gurk, p_player: Player) -> void:
-	super(p_gurk, "EQUIP", "X")
+func _init(p_ruik: Ruik, p_player: Player) -> void:
+	super(p_ruik, "EQUIP", "X")
 	player = p_player
 	set_button(7, "BACK")
 	set_button(9, "EXIT")
@@ -64,7 +64,7 @@ func do_layout() -> void:
 
 
 func item_selected(index: int, _item) -> void:
-	gurk.push_view(ItemView.new(gurk, player, ItemView.ACTION_EQUIP, index))
+	ruik.push_view(ItemView.new(ruik, player, ItemView.ACTION_EQUIP, index))
 
 
 func item_highlighted(index: int, _item) -> void:
@@ -82,11 +82,11 @@ func item_highlighted(index: int, _item) -> void:
 func command(text: String) -> void:
 	match text:
 		"BACK":
-			gurk.pop_view(null)
+			ruik.pop_view(null)
 		"EXIT":
-			gurk.pop_to_top_view(null)
+			ruik.pop_to_top_view(null)
 		"INFO":
-			gurk.push_view(ItemInfoView.new(gurk, player.get_equipped_item_by_type(Item.TYPES[selected])))
+			ruik.push_view(ItemInfoView.new(ruik, player.get_equipped_item_by_type(Item.TYPES[selected])))
 		_:
 			super(text)
 

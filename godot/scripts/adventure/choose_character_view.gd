@@ -28,8 +28,8 @@ var type: String
 var game: Game
 
 
-func _init(p_gurk: Gurk, p_type: String, p_game: Game) -> void:
-	super(p_gurk, "CHOOSE", "DONE")
+func _init(p_ruik: Ruik, p_type: String, p_game: Game) -> void:
+	super(p_ruik, "CHOOSE", "DONE")
 	type = p_type
 	game = p_game
 
@@ -47,9 +47,9 @@ func do_layout() -> void:
 	clear()
 	var y := 3
 	var article := "an" if type == "archer" else "a"
-	add_label_centered("Choose %s %s" % [article, Util.capitalize(type)], "#FFF", 0, y, 128, GurkScreen.FONT.font_height)
+	add_label_centered("Choose %s %s" % [article, Util.capitalize(type)], "#FFF", 0, y, 128, RuikScreen.FONT.font_height)
 	y += 8
-	add_label_centered("(Press INFO to learn more)", "#A0A0A0", 0, y, 128, GurkScreen.FONT.font_height)
+	add_label_centered("(Press INFO to learn more)", "#A0A0A0", 0, y, 128, RuikScreen.FONT.font_height)
 	y += 12
 	for character in characters:
 		add_icon(character.icon, 2, y)
@@ -60,7 +60,7 @@ func do_layout() -> void:
 
 
 func item_selected(_index: int, _item) -> void:
-	gurk.push_view(CharacterRollView.new(gurk, game, characters[selected]))
+	ruik.push_view(CharacterRollView.new(ruik, game, characters[selected]))
 
 
 func item_highlighted(index: int, _item) -> void:
@@ -76,11 +76,11 @@ func item_highlighted(index: int, _item) -> void:
 
 func command(text: String) -> void:
 	if text == "INFO":
-		gurk.push_view(CharacterInfoView.new(gurk, characters[selected]))
+		ruik.push_view(CharacterInfoView.new(ruik, characters[selected]))
 	else:
 		super(text)
 
 
 func process_result(result) -> void:
 	if Util.eq(result, "NEXT"):
-		gurk.pop_view(result)
+		ruik.pop_view(result)

@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 # -----------------------------------------------------------------------------
-class_name GurkFont
+class_name RuikFont
 extends RefCounted
 ## Bitmap font. The font image is opaque around each glyph and transparent
 ## inside it, so text is drawn by filling a rectangle with the text color and

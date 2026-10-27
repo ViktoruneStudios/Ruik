@@ -13,7 +13,7 @@ const COMBAT_MAPS := ["wilderness", "ruins", "sewer", "fortress1", "crypt", "kee
 const COMBAT_PREFERENCES := ["TARGET", "HEAL", "RESTORE", "CURE", "SUMMON", "TELEPORT", "CAST", "CAST/USE", "ATTACK", "FIRE", "ATT/FIRE", "USE", "OK"]
 const TIME_SCALE := 25.0
 
-var gurk: Gurk
+var ruik: Ruik
 var views_seen := {}
 var buttons_pressed := {}
 var _backup := {}
@@ -27,8 +27,8 @@ func _ready() -> void:
 	Device.set_setting("sound", false)
 	Device.clear_game()
 	Engine.time_scale = TIME_SCALE
-	gurk = load("res://main.tscn").instantiate()
-	add_child(gurk)
+	ruik = load("res://main.tscn").instantiate()
+	add_child(ruik)
 	await get_tree().process_frame
 	_check_icons()
 	Validate.run()
@@ -44,7 +44,7 @@ func _ready() -> void:
 
 func _enabled_buttons() -> Array:
 	var texts := []
-	for row in gurk.button_grid.buttons:
+	for row in ruik.button_grid.buttons:
 		for button in row:
 			if button.on:
 				texts.append(button.text)
@@ -57,16 +57,16 @@ func _press(text: String) -> bool:
 		print("SMOKE: button '%s' not available in %s (have %s)" % [text, _view_name(), _enabled_buttons()])
 		return false
 	buttons_pressed[text] = buttons_pressed.get(text, 0) + 1
-	gurk.button_pressed(text)
+	ruik.button_pressed(text)
 	await get_tree().process_frame
 	_note_view()
 	return true
 
 
 func _view_name() -> String:
-	if gurk.view == null:
+	if ruik.view == null:
 		return "null"
-	var script: Script = gurk.view.get_script()
+	var script: Script = ruik.view.get_script()
 	return script.get_global_name()
 
 
@@ -123,7 +123,7 @@ func _new_game() -> void:
 		await _press("CHOOSE")
 		await _press("REROLL")
 		await _press("KEEP")
-	print("SMOKE: new game -> %s, party of %d" % [_view_name(), gurk.game.players.size() if gurk.game else 0])
+	print("SMOKE: new game -> %s, party of %d" % [_view_name(), ruik.game.players.size() if ruik.game else 0])
 
 
 func _scripted_tour() -> void:
@@ -143,8 +143,8 @@ func _scripted_tour() -> void:
 	await _press("MAP")
 	await _press("NO MAP")
 	# Spend some gold and buy things so items and spells get exercised.
-	gurk.game.gold = 5000
-	for player in gurk.game.players:
+	ruik.game.gold = 5000
+	for player in ruik.game.players:
 		player.level = 5
 		player.max_spell_points = 30
 		player.spell_points = 30
@@ -156,12 +156,12 @@ func _save_and_load() -> void:
 	await _press("OK")
 	# Loading rebuilds the shops, which creates items and advances itemId (as
 	# in the original), so that one field is left out of the comparison.
-	var saved := gurk.game.save_game()
+	var saved := ruik.game.save_game()
 	saved.erase("itemId")
 	var before := JSON.stringify(saved)
-	gurk.start_saved_game()
+	ruik.start_saved_game()
 	await get_tree().process_frame
-	var loaded := gurk.game.save_game()
+	var loaded := ruik.game.save_game()
 	loaded.erase("itemId")
 	var after := JSON.stringify(loaded)
 	print("SMOKE: save/load round trip %s" % ("matches" if before == after else "DIFFERS"))
@@ -178,13 +178,13 @@ func _random_play(steps: int) -> void:
 		if texts.is_empty():
 			break
 		# Now and then, jump to another map so more of the game gets visited.
-		if step % 750 == 749 and gurk.view is MapView and gurk.stack.is_empty():
+		if step % 750 == 749 and ruik.view is MapView and ruik.stack.is_empty():
 			var map_name: String = teleports[(step / 750) % teleports.size()]
 			_teleport(map_name)
 			continue
 		var walkable := texts.filter(func(t): return moves.has(t))
 		var text: String
-		if gurk.view is MapView and walkable.size() > 0 and randf() < 0.75:
+		if ruik.view is MapView and walkable.size() > 0 and randf() < 0.75:
 			text = walkable.pick_random()
 		elif texts.has("TARGET") and randf() < 0.8:
 			text = "TARGET"
@@ -193,8 +193,8 @@ func _random_play(steps: int) -> void:
 			text = (others if others.size() > 0 else texts).pick_random()
 		await _press(text)
 		# Keep the party alive often enough to see more of the game.
-		if step % 200 == 0 and gurk.game != null:
-			gurk.game.heal_party()
+		if step % 200 == 0 and ruik.game != null:
+			ruik.game.heal_party()
 	print("SMOKE: random play done in %s" % _view_name())
 
 
@@ -204,15 +204,15 @@ func _combat_play(count: int) -> void:
 	var outcomes := {}
 	for i in count:
 		_teleport(COMBAT_MAPS[i * COMBAT_MAPS.size() / count])
-		var map_view: MapView = gurk.view
-		gurk.game.heal_party()
-		var encounter := gurk.game.create_encounter()
+		var map_view: MapView = ruik.view
+		ruik.game.heal_party()
+		var encounter := ruik.game.create_encounter()
 		if encounter.creatures.is_empty():
 			continue
 		map_view.encounter = encounter
 		map_view.process_result("combat")
 		var steps := 0
-		while steps < 600 and not (gurk.view is MapView and gurk.stack.is_empty()):
+		while steps < 600 and not (ruik.view is MapView and ruik.stack.is_empty()):
 			steps += 1
 			await _wait_for_buttons()
 			var texts := _enabled_buttons()
@@ -223,12 +223,12 @@ func _combat_play(count: int) -> void:
 				if texts.has(preferred) and randf() < 0.7:
 					text = preferred
 					break
-			if gurk.view is SelectView and not texts.has("CAST") and texts.has(View.DOWN) and randf() < 0.5:
+			if ruik.view is SelectView and not texts.has("CAST") and texts.has(View.DOWN) and randf() < 0.5:
 				text = View.DOWN
 			await _press(text)
-		var outcome := "finished" if gurk.view is MapView else "unfinished in %s" % _view_name()
+		var outcome := "finished" if ruik.view is MapView else "unfinished in %s" % _view_name()
 		outcomes[outcome] = outcomes.get(outcome, 0) + 1
-		while not (gurk.view is MapView and gurk.stack.is_empty()):
+		while not (ruik.view is MapView and ruik.stack.is_empty()):
 			var texts := _enabled_buttons()
 			var leave := ["OK", "DONE", "EXIT", "X", "CANCEL", "BACK", "NO"].filter(func(t): return texts.has(t))
 			if leave.is_empty():
@@ -241,8 +241,8 @@ func _teleport(map_name: String) -> void:
 	var map: Dictionary = Data.maps[map_name]
 	for feature in map.get("features", []):
 		if feature.type == "transition":
-			gurk.game.transition_to(map_name, feature.x, feature.y)
-			gurk.set_view(MapView.new(gurk))
+			ruik.game.transition_to(map_name, feature.x, feature.y)
+			ruik.set_view(MapView.new(ruik))
 			print("SMOKE: teleported to %s" % map_name)
 			return
 

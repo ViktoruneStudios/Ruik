@@ -23,8 +23,8 @@ extends SelectView
 ## Lists started quests (marked "+" once done).
 
 
-func _init(p_gurk: Gurk) -> void:
-	super(p_gurk, "VIEW", "EXIT")
+func _init(p_ruik: Ruik) -> void:
+	super(p_ruik, "VIEW", "EXIT")
 
 
 func do_layout() -> void:
@@ -34,9 +34,9 @@ func do_layout() -> void:
 	var y := 9
 	for quest in Data.quests:
 		var info: Dictionary = Data.quests[quest]
-		if gurk.game.has_marker(info.get("started")):
+		if ruik.game.has_marker(info.get("started")):
 			have_quests = true
-			if gurk.game.has_marker(info.get("done")):
+			if ruik.game.has_marker(info.get("done")):
 				add_label("+", "#FFF", 1, y)
 			add_option(quest, "#FFF", 6, y)
 			y += 8
@@ -46,14 +46,14 @@ func do_layout() -> void:
 
 func item_selected(_index: int, label) -> void:
 	var quest_info: Dictionary = Data.quests[label.text]
-	var info_view := AlertView.new(gurk, quest_info.icon, label.text, quest_info.text, null)
-	if gurk.game.has_marker(quest_info.get("done")):
+	var info_view := AlertView.new(ruik, quest_info.icon, label.text, quest_info.text, null)
+	if ruik.game.has_marker(quest_info.get("done")):
 		info_view.subtitle = "(Completed)"
-	gurk.push_view(info_view)
+	ruik.push_view(info_view)
 
 
 func command(text: String) -> void:
 	if text == "EXIT":
-		gurk.pop_to_top_view(null)
+		ruik.pop_to_top_view(null)
 	else:
 		super(text)

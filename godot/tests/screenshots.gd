@@ -4,7 +4,7 @@ extends Node
 ##
 ##   godot --path godot res://tests/screenshots.tscn
 
-var gurk: Gurk
+var ruik: Ruik
 var _backup := {}
 
 
@@ -16,25 +16,25 @@ func _ready() -> void:
 	Device.set_setting("sound", false)
 	Device.clear_game()
 	DirAccess.make_dir_recursive_absolute("user://screenshots")
-	gurk = load("res://main.tscn").instantiate()
-	add_child(gurk)
+	ruik = load("res://main.tscn").instantiate()
+	add_child(ruik)
 	await _shot("1_title")
 	for text in ["NEW", "OK", "CHOOSE", "KEEP", "CHOOSE", "KEEP", "CHOOSE", "KEEP"]:
-		gurk.button_pressed(text)
+		ruik.button_pressed(text)
 	await _shot("2_town")
-	gurk.button_pressed("HEROES")
+	ruik.button_pressed("HEROES")
 	await _shot("3_party")
-	gurk.button_pressed("VIEW")
+	ruik.button_pressed("VIEW")
 	await _shot("4_hero")
-	gurk.pop_to_top_view(null)
-	gurk.button_pressed("MAP")
+	ruik.pop_to_top_view(null)
+	ruik.button_pressed("MAP")
 	await _shot("5_overview")
-	gurk.button_pressed("NO MAP")
-	gurk.game.transition_to("sewer", 2, 2)
-	gurk.set_view(MapView.new(gurk))
+	ruik.button_pressed("NO MAP")
+	ruik.game.transition_to("sewer", 2, 2)
+	ruik.set_view(MapView.new(ruik))
 	await _shot("6_dark_dungeon")
-	var map_view: MapView = gurk.view
-	map_view.encounter = gurk.game.create_encounter()
+	var map_view: MapView = ruik.view
+	map_view.encounter = ruik.game.create_encounter()
 	map_view.encounter.creatures.append(Creature.new(Library.get_creature_by_name("Orc")))
 	map_view.process_result("combat")
 	await _shot("7_combat")

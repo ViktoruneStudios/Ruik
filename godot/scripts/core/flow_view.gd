@@ -25,8 +25,8 @@ extends AlertView
 var paragraphs: Array = []
 
 
-func _init(p_gurk: Gurk, p_icon, p_title, p_result, p_alt_icon = null) -> void:
-	super(p_gurk, p_icon, p_title, "", p_result, p_alt_icon)
+func _init(p_ruik: Ruik, p_icon, p_title, p_result, p_alt_icon = null) -> void:
+	super(p_ruik, p_icon, p_title, "", p_result, p_alt_icon)
 	paragraphs = []
 
 
@@ -40,10 +40,10 @@ func add_gap() -> void:
 
 func do_draw() -> void:
 	super()
-	var y := AlertView.ICON_Y * 2 + GurkScreen.UNIT
+	var y := AlertView.ICON_Y * 2 + RuikScreen.UNIT
 	var x := AlertView.ICON_X
 	for paragraph in paragraphs:
 		if paragraph.text == null or paragraph.text == "":
 			y += 4
 		else:
-			y += screen.wrap_text(paragraph.text, paragraph.color, x, y, GurkScreen.SIZE - 2 * x)
+			y += screen.wrap_text(paragraph.text, paragraph.color, x, y, RuikScreen.SIZE - 2 * x)

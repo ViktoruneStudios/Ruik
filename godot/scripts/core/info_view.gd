@@ -27,8 +27,8 @@ var labels: Array = []
 var done_verb: String
 
 
-func _init(p_gurk: Gurk, p_done_verb: String = "DONE") -> void:
-	super(p_gurk.get_screen(), p_gurk)
+func _init(p_ruik: Ruik, p_done_verb: String = "DONE") -> void:
+	super(p_ruik.get_screen(), p_ruik)
 	icons = []
 	labels = []
 	done_verb = p_done_verb
@@ -55,15 +55,15 @@ func add_label(text: String, color, x: float, y: float) -> int:
 
 
 func add_label_centered(text: String, color, x: float, y: float, width: float, height: float) -> int:
-	var w := GurkScreen.FONT.get_width(text)
-	var h := GurkScreen.FONT.font_height
+	var w := RuikScreen.FONT.get_width(text)
+	var h := RuikScreen.FONT.font_height
 	var xx := x + floorf((width - w) / 2.0)
 	var yy := y + floorf((height - h) / 2.0)
 	return add_label(text, color, xx, yy)
 
 
 func do_draw() -> void:
-	screen.clear_color(GurkScreen.GURK_BLUE)
+	screen.clear_color(RuikScreen.RUIK_BLUE)
 	for icon in icons:
 		screen.draw_icon(icon.icon, icon.x, icon.y)
 	for label in labels:
@@ -72,4 +72,4 @@ func do_draw() -> void:
 
 func command(text: String) -> void:
 	if text == done_verb:
-		gurk.pop_view(null)
+		ruik.pop_view(null)

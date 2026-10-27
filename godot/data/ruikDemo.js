@@ -49,9 +49,9 @@ var Data = {
         100000000// END
     ],
 
-    splashMusic : "gurkdemo7", // Music played during splash screen and character creation
-    combatMusic : "gurkdemo8", // Music played when in combat
-    boatMusic : "gurkdemo7", // Music played while on a ship
+    splashMusic : "ruikdemo7", // Music played during splash screen and character creation
+    combatMusic : "ruikdemo8", // Music played when in combat
+    boatMusic : "ruikdemo7", // Music played while on a ship
 
     //// Level transformations, each row adds to 10,000, maps level -> level for encounters, treasure, etc.
 
@@ -4096,7 +4096,7 @@ var Data = {
         "wilderness" : {
             name: "The Wildernesse",
             map : "@wild.txt", // This references a filename called 'wild.txt' in the 'maps' directory. Use the MapEditor java program to make maps, in concert with the tiles.txt file that it uses.
-            music : "gurkdemo4",
+            music : "ruikdemo4",
             dark: false,
             level: 1, // This level is a guide as to what levels of creatures should be randomly encountered.
             encounterChance : 25, // Chance of a random encounter each step the party takes
@@ -4347,7 +4347,7 @@ var Data = {
         "town" : {
             name : "Bryerlake",
             map : "@town.txt",
-            music : "gurkdemo9",
+            music : "ruikdemo9",
             dark : false,
             level : 1,
             groups : ["default"],
@@ -4490,7 +4490,7 @@ var Data = {
         "ruins" : {
             name : "Kinstown Ruins",
             map : "@ruins.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true, // When dark is true, the fairly-lame line-of-sight algorithm will be engaged.
             level : 1,
             groups : ["kobold", "default"],
@@ -4550,7 +4550,7 @@ var Data = {
         "sewer" : {
             name : "Kinstown Sewers",
             map : "@sewer.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 1,
             groups : ["kobold", "default"],
@@ -4667,7 +4667,7 @@ var Data = {
         "village" : {
             name : "Moorhaven",
             map : "@village.txt",
-            music : "gurkdemo9",
+            music : "ruikdemo9",
             dark : false,
             level : 1,
             groups : ["default"],
@@ -4717,7 +4717,7 @@ var Data = {
         "port" : {
             name : "Port Artha",
             map : "@port.txt",
-            music : "gurkdemo9",
+            music : "ruikdemo9",
             dark : false,
             level : 1,
             groups : ["default"],
@@ -4881,7 +4881,7 @@ var Data = {
         "fortress1" : {
             name : "Goblin Fortress",
             map : "@fortress1.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 1,
             groups : ["goblin", "default"],
@@ -5001,7 +5001,7 @@ var Data = {
         "fortress2" : {
             name : "Goblin Fortress",
             map : "@fortress2.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 2,
             groups : ["goblin", "default"],
@@ -5113,7 +5113,7 @@ var Data = {
         "castle" : {
             name : "Castle Bashgar",
             map : "@castle.txt",
-            music : "gurkdemo9",
+            music : "ruikdemo9",
             dark : true,
             level : 1,
             groups : ["default"],
@@ -5355,7 +5355,7 @@ var Data = {
         "crypt" : {
             name : "Ashvari Crypts",
             map : "@crypt.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 4,
             groups : ["undead", "default"],
@@ -5519,7 +5519,7 @@ var Data = {
         "keep" : {
             name : "Rogaard Keep",
             map : "@keep.txt",
-            music : "gurkdemo9",
+            music : "ruikdemo9",
             dark : true,
             level : 1,
             groups : ["default"],
@@ -5711,7 +5711,7 @@ var Data = {
         "tower1" : {
             name : "Vygurn Tower",
             map : "@tower1.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 5,
             groups : ["tundra", "dungeon", "default"],
@@ -5768,7 +5768,7 @@ var Data = {
         "tower2" : {
             name : "Vygurn Tower",
             map : "@tower2.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 5,
             groups : ["tundra", "dungeon", "default"],
@@ -5849,7 +5849,7 @@ var Data = {
         "tower3" : {
             name : "Vygurn Tower",
             map : "@tower3.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 5,
             groups : ["tundra", "dungeon", "default"],
@@ -5913,7 +5913,7 @@ var Data = {
         "isle" : {
             name : "Wandering Isle",
             map : "@isle.txt",
-            music : "gurkdemo9",
+            music : "ruikdemo9",
             dark : false,
             level : 1,
             groups : ["default"],
@@ -5971,7 +5971,7 @@ var Data = {
         "lair" : {
             name : "Vezu's Lair",
             map : "@lair.txt",
-            music : "gurkdemo7",
+            music : "ruikdemo7",
             dark : true,
             level : 6,
             groups : ["dungeon", "undead", "default"],
@@ -6292,49 +6292,49 @@ A:::::::A\
                     type : "sign",
                     x : 4,
                     y : 1,
-                    icon : "gurk_01.png"
+                    icon : "ruik_01.png"
                 },
                 {
                     type : "sign",
                     x : 5,
                     y : 1,
-                    icon : "gurk_02.png"
+                    icon : "ruik_02.png"
                 },
                 {
                     type : "sign",
                     x : 6,
                     y : 1,
-                    icon : "gurk_03.png"
+                    icon : "ruik_03.png"
                 },
                 {
                     type : "sign",
                     x : 7,
                     y : 1,
-                    icon : "gurk_04.png"
+                    icon : "ruik_04.png"
                 },
                 {
                     type : "sign",
                     x : 4,
                     y : 2,
-                    icon : "gurk_05.png"
+                    icon : "ruik_05.png"
                 },
                 {
                     type : "sign",
                     x : 5,
                     y : 2,
-                    icon : "gurk_06.png"
+                    icon : "ruik_06.png"
                 },
                 {
                     type : "sign",
                     x : 6,
                     y : 2,
-                    icon : "gurk_07.png"
+                    icon : "ruik_07.png"
                 },
                 {
                     type : "sign",
                     x : 7,
                     y : 2,
-                    icon : "gurk_08.png"
+                    icon : "ruik_08.png"
                 },
                 {
                     type : "sign",

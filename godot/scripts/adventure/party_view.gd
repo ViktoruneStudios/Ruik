@@ -25,9 +25,9 @@ extends SelectView
 var game: Game
 
 
-func _init(p_gurk: Gurk) -> void:
-	super(p_gurk, "VIEW", "EXIT")
-	game = gurk.game
+func _init(p_ruik: Ruik) -> void:
+	super(p_ruik, "VIEW", "EXIT")
+	game = ruik.game
 	set_button(1, "OPTIONS")
 
 
@@ -38,7 +38,7 @@ func do_layout() -> void:
 		if game.has_marker(marker) and not game.has_marker(key.get("until")):
 			add_icon(key.icon, 110, 10)
 	var y := 2
-	add_label_centered("The Adventurers", "#FFF", 0, y, 128, GurkScreen.FONT.font_height)
+	add_label_centered("The Adventurers", "#FFF", 0, y, 128, RuikScreen.FONT.font_height)
 	y += 10
 	add_label("In: %s" % Data.maps[game.map].name, "#FFF", 3, y)
 	y += 8
@@ -70,13 +70,13 @@ func do_layout() -> void:
 
 func item_selected(index: int, _item) -> void:
 	if index == 3:
-		gurk.push_view(ItemView.new(gurk, game.bag, ItemView.ACTION_INFO))
+		ruik.push_view(ItemView.new(ruik, game.bag, ItemView.ACTION_INFO))
 	else:
-		gurk.push_view(PlayerView.new(gurk, game.players[index]))
+		ruik.push_view(PlayerView.new(ruik, game.players[index]))
 
 
 func command(text: String) -> void:
 	if text == "OPTIONS":
-		gurk.show_settings()
+		ruik.show_settings()
 	else:
 		super(text)

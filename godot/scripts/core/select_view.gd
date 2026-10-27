@@ -31,8 +31,8 @@ var select_verb = null
 var cancel_verb = null
 
 
-func _init(p_gurk: Gurk, p_select_verb = "SELECT", p_cancel_verb = "CANCEL") -> void:
-	super(p_gurk)
+func _init(p_ruik: Ruik, p_select_verb = "SELECT", p_cancel_verb = "CANCEL") -> void:
+	super(p_ruik)
 	select_verb = p_select_verb
 	cancel_verb = p_cancel_verb
 	options = []
@@ -68,12 +68,12 @@ func turn_off_selection() -> void:
 
 ## Override to respond to cancellation differently.
 func cancelled() -> void:
-	gurk.pop_view(null)
+	ruik.pop_view(null)
 
 
 ## Override to respond to selection differently.
 func item_selected(_index: int, item) -> void:
-	gurk.pop_view(item)
+	ruik.pop_view(item)
 
 
 ## Override to respond to highlighting.

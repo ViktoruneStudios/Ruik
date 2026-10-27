@@ -36,8 +36,8 @@ var has_summon_room := false
 var combatant = null
 
 
-func _init(p_gurk: Gurk, p_player, p_in_combat := false, p_melee := false, p_has_summon_room := false, p_combatant = null) -> void:
-	super(p_gurk, "CAST", "X")
+func _init(p_ruik: Ruik, p_player, p_in_combat := false, p_melee := false, p_has_summon_room := false, p_combatant = null) -> void:
+	super(p_ruik, "CAST", "X")
 	player = p_player
 	in_combat = p_in_combat
 	melee = p_melee
@@ -97,37 +97,37 @@ func item_highlighted(index: int, item) -> void:
 func item_selected(index: int, _item) -> void:
 	if index < castable.size() and castable[index]:
 		if in_combat:
-			gurk.pop_view(spells[index])
-		elif gurk.game.players_need_healing():
-			gurk.push_view(PlayerDialog.new(gurk, PlayerDialog.ACTION_HEAL))
+			ruik.pop_view(spells[index])
+		elif ruik.game.players_need_healing():
+			ruik.push_view(PlayerDialog.new(ruik, PlayerDialog.ACTION_HEAL))
 		else:
-			gurk.push_view(AlertView.new(gurk, Data.icons.party, "Fully Healed", "There is nobody to target with that spell, all of the adventures are fully healed!", null))
+			ruik.push_view(AlertView.new(ruik, Data.icons.party, "Fully Healed", "There is nobody to target with that spell, all of the adventures are fully healed!", null))
 
 
 func command(text: String) -> void:
 	result_mode = "NORMAL"
 	match text:
 		"BACK", "CANCEL":
-			gurk.pop_view(null)
+			ruik.pop_view(null)
 		"EXIT":
-			gurk.pop_to_top_view(null)
+			ruik.pop_to_top_view(null)
 		"INFO":
 			if selected < spells.size():
-				gurk.push_view(SpellInfoView.new(gurk, player, spells[selected]))
+				ruik.push_view(SpellInfoView.new(ruik, player, spells[selected]))
 		"USE":
 			result_mode = "USE"
-			gurk.push_view(ItemView.new(gurk, player, ItemView.ACTION_USE, in_combat, melee, has_summon_room, combatant))
+			ruik.push_view(ItemView.new(ruik, player, ItemView.ACTION_USE, in_combat, melee, has_summon_room, combatant))
 		_:
 			super(text)
 
 
 func process_result(result) -> void:
 	if result_mode == "USE":
-		gurk.pop_view(result)
+		ruik.pop_view(result)
 		return
 	if not (result is int):
 		return
-	var target: Player = gurk.game.players[result]
+	var target: Player = ruik.game.players[result]
 	var spell: Dictionary = spells[selected]
 	player.spell_points -= spell.spellPoints
 	var bounds: Dictionary = player.get_spell_range(spell)
@@ -135,9 +135,9 @@ func process_result(result) -> void:
 		var org_spell_points := target.spell_points
 		target.spell_points = mini(target.max_spell_points, target.spell_points + Util.random(bounds.min, bounds.max))
 		var restore_amount := target.spell_points - org_spell_points
-		gurk.push_view(AlertView.new(gurk, target.character.icon, "Restored", "%s was restored for %d points, now at %d/%d." % [target.character.name, restore_amount, target.spell_points, target.max_spell_points], null))
+		ruik.push_view(AlertView.new(ruik, target.character.icon, "Restored", "%s was restored for %d points, now at %d/%d." % [target.character.name, restore_amount, target.spell_points, target.max_spell_points], null))
 	else:
 		var org_hit_points := target.hit_points
 		target.hit_points = mini(target.max_hit_points, target.hit_points + Util.random(bounds.min, bounds.max))
 		var heal_amount := target.hit_points - org_hit_points
-		gurk.push_view(AlertView.new(gurk, target.character.icon, "Healed", "%s was healed for %d points, now at %d/%d." % [target.character.name, heal_amount, target.hit_points, target.max_hit_points], null))
+		ruik.push_view(AlertView.new(ruik, target.character.icon, "Healed", "%s was healed for %d points, now at %d/%d." % [target.character.name, heal_amount, target.hit_points, target.max_hit_points], null))

@@ -27,8 +27,8 @@ var game: Game
 var character: Dictionary
 
 
-func _init(p_gurk: Gurk, p_game: Game, p_character: Dictionary) -> void:
-	super(p_gurk, "KEEP")
+func _init(p_ruik: Ruik, p_game: Game, p_character: Dictionary) -> void:
+	super(p_ruik, "KEEP")
 	game = p_game
 	character = p_character
 	set_button(1, "REROLL")
@@ -73,9 +73,9 @@ func command(text: String) -> void:
 	match text:
 		"KEEP":
 			game.add_player(player)
-			gurk.pop_view("NEXT")
+			ruik.pop_view("NEXT")
 		"BACK":
-			gurk.pop_view("BACK")
+			ruik.pop_view("BACK")
 		"REROLL":
 			roll()
 			draw()

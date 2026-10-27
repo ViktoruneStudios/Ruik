@@ -18991,49 +18991,49 @@ T::::TTTT\
                     type : "sign",
                     x : 1,
                     y : 6,
-                    icon : "gurk_01.png"
+                    icon : "ruik_01.png"
                 },
                 {
                     type : "sign",
                     x : 2,
                     y : 6,
-                    icon : "gurk_02.png"
+                    icon : "ruik_02.png"
                 },
                 {
                     type : "sign",
                     x : 3,
                     y : 6,
-                    icon : "gurk_03.png"
+                    icon : "ruik_03.png"
                 },
                 {
                     type : "sign",
                     x : 4,
                     y : 6,
-                    icon : "gurk_04.png"
+                    icon : "ruik_04.png"
                 },
                 {
                     type : "sign",
                     x : 1,
                     y : 7,
-                    icon : "gurk_05.png"
+                    icon : "ruik_05.png"
                 },
                 {
                     type : "sign",
                     x : 2,
                     y : 7,
-                    icon : "gurk_06.png"
+                    icon : "ruik_06.png"
                 },
                 {
                     type : "sign",
                     x : 3,
                     y : 7,
-                    icon : "gurk_07.png"
+                    icon : "ruik_07.png"
                 },
                 {
                     type : "sign",
                     x : 4,
                     y : 7,
-                    icon : "gurk_08.png"
+                    icon : "ruik_08.png"
                 },
                 {
                     type : "sign",

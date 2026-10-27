@@ -28,7 +28,7 @@ const RIGHT := 90
 const DOWN := 180
 const LEFT := 270
 
-const LENGTH := GurkScreen.UNIT + 4
+const LENGTH := RuikScreen.UNIT + 4
 
 var _atlases: Array = []
 var _work: Image
@@ -52,7 +52,7 @@ func draw_icon(icon) -> void:
 	var coords = Data.icon_coords.get(icon) if icon is String else null
 	if coords == null:
 		return
-	var k := GurkScreen.UNIT
+	var k := RuikScreen.UNIT
 	_work.blit_rect(_atlases[coords.block], Rect2i(k * coords.x, k * coords.y, k, k), Vector2i(2, 2))
 
 
@@ -62,15 +62,15 @@ func _texture() -> ImageTexture:
 
 func paint(colors: Array) -> ImageTexture:
 	var arcs := ImageProcessor.compute_arcs(colors, 12)
-	for y in GurkScreen.UNIT:
-		for x in GurkScreen.UNIT:
+	for y in RuikScreen.UNIT:
+		for x in RuikScreen.UNIT:
 			var px := _work.get_pixel(x + 2, y + 2)
 			var r := px.r8
 			var g := px.g8
 			var b := px.b8
 			var a := px.a8
 			if a > 0 and (r > 0 or g > 0 or b > 0):
-				var c := ImageProcessor.blend(colors, arcs, GurkScreen.HALF_UNIT - y, GurkScreen.HALF_UNIT - x)
+				var c := ImageProcessor.blend(colors, arcs, RuikScreen.HALF_UNIT - y, RuikScreen.HALF_UNIT - x)
 				r = mini(255, r + c.red) if c.red > 0 else maxi(0, r + c.red)
 				g = mini(255, g + c.green) if c.green > 0 else maxi(0, g + c.green)
 				b = mini(255, b + c.blue) if c.blue > 0 else maxi(0, b + c.blue)

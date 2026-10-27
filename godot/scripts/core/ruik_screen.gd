@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 # -----------------------------------------------------------------------------
-class_name GurkScreen
+class_name RuikScreen
 extends Control
 ## The 128x128 game display (port of the CoffeeScript Screen class).
 ##
@@ -33,7 +33,7 @@ const HALF_UNIT := 8
 const WIN_SIZE := 9
 const CENTER_OFFSET := 4
 const ICONS_PER_ROW := 7
-const GURK_BLUE := "#004c62"
+const RUIK_BLUE := "#004c62"
 
 const MICRO_GLYPHS := {
 	"A": Rect2i(0, 0, 5, 8), "B": Rect2i(5, 0, 5, 8), "C": Rect2i(10, 0, 4, 8),
@@ -69,7 +69,7 @@ const MICRO_GLYPHS := {
 	"|": Rect2i(20, 25, 4, 8), # Half spell
 }
 
-static var FONT: GurkFont = null
+static var FONT: RuikFont = null
 
 var icons: Array = []
 var screen_overlay: Texture2D
@@ -84,7 +84,7 @@ func _init() -> void:
 	custom_minimum_size = size
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	FONT = GurkFont.new(MICRO_GLYPHS, load("res://assets/images/font_micro.png"))
+	FONT = RuikFont.new(MICRO_GLYPHS, load("res://assets/images/font_micro.png"))
 	icons = [load("res://assets/images/icons0.png"), load("res://assets/images/icons1.png")]
 	screen_overlay = load("res://assets/images/screen.png")
 

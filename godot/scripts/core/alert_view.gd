@@ -34,8 +34,8 @@ var alt_icon
 var subtitle = null
 
 
-func _init(p_gurk: Gurk, p_icon, p_title, p_text, p_result, p_alt_icon = null) -> void:
-	super(p_gurk.get_screen(), p_gurk)
+func _init(p_ruik: Ruik, p_icon, p_title, p_text, p_result, p_alt_icon = null) -> void:
+	super(p_ruik.get_screen(), p_ruik)
 	icon = p_icon
 	title = View.s(p_title)
 	text = View.s(p_text)
@@ -45,18 +45,18 @@ func _init(p_gurk: Gurk, p_icon, p_title, p_text, p_result, p_alt_icon = null) -
 
 
 func do_draw() -> void:
-	screen.clear_color(GurkScreen.GURK_BLUE)
+	screen.clear_color(RuikScreen.RUIK_BLUE)
 	screen.draw_icon(icon, ICON_X, ICON_Y)
 	if alt_icon != null:
-		screen.draw_icon(alt_icon, GurkScreen.SIZE - GurkScreen.UNIT - ICON_X, ICON_Y)
+		screen.draw_icon(alt_icon, RuikScreen.SIZE - RuikScreen.UNIT - ICON_X, ICON_Y)
 	if subtitle != null:
-		screen.draw_text_centered(title, "#FFF", 0, 1, GurkScreen.SIZE, GurkScreen.UNIT)
-		screen.draw_text_centered(subtitle, "#A0A0A0", 0, 9, GurkScreen.SIZE, GurkScreen.UNIT)
+		screen.draw_text_centered(title, "#FFF", 0, 1, RuikScreen.SIZE, RuikScreen.UNIT)
+		screen.draw_text_centered(subtitle, "#A0A0A0", 0, 9, RuikScreen.SIZE, RuikScreen.UNIT)
 	else:
-		screen.draw_text_centered(title, "#FFF", 0, ICON_Y + 1, GurkScreen.SIZE, GurkScreen.UNIT)
-	screen.wrap_text(text, "#FFF", ICON_X, ICON_Y * 2 + GurkScreen.UNIT, GurkScreen.SIZE - 2 * ICON_X)
+		screen.draw_text_centered(title, "#FFF", 0, ICON_Y + 1, RuikScreen.SIZE, RuikScreen.UNIT)
+	screen.wrap_text(text, "#FFF", ICON_X, ICON_Y * 2 + RuikScreen.UNIT, RuikScreen.SIZE - 2 * ICON_X)
 
 
 func command(button_text: String) -> void:
 	if button_text == "OK":
-		gurk.pop_view(result)
+		ruik.pop_view(result)

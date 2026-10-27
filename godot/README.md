@@ -25,7 +25,7 @@ and `H` are the original debug hooks: `G` wins a combat instantly.
 
 | Path | Contents |
 | --- | --- |
-| `data/gurkDemo.js` | The game data, unchanged from `game/gurkDemo.js`, documented inline. |
+| `data/ruikDemo.js` | The game data, unchanged from `game/gurkDemo.js`, documented inline. |
 | `data/maps/*.txt` | Map files, referenced from the data as `"@name.txt"`. |
 | `data/icons.js` | Icon name to atlas position, from `web/icons.js`. |
 | `assets/images` | The 1x art: icon atlases, fonts, buttons, screen overlays. |
@@ -34,7 +34,7 @@ and `H` are the original debug hooks: `G` wins a combat instantly.
 | `scripts/model` | Items, creatures, heroes, and the game state. |
 | `scripts/adventure` | Every non-combat screen: title, hero creation, map, party, items, spells. |
 | `scripts/combat` | Combat view, combatants, and the enemy AI. |
-| `scripts/gurk.gd` | Entry point: view stack, input, sound, music, timers. |
+| `scripts/ruik.gd` | Entry point: view stack, input, sound, music, timers. |
 
 The CoffeeScript classes map one-to-one onto these scripts, with method names
 in GDScript's snake_case (`processResult` became `process_result`). Fields read
@@ -42,7 +42,7 @@ straight from the game data keep their original camelCase keys.
 
 ## Editing the game
 
-`data/gurkDemo.js` is read directly at startup, so edit it and the map files
+`data/ruikDemo.js` is read directly at startup, so edit it and the map files
 the same way as before (see the comments in that file). `GameCompiler.java` is
 no longer needed. The title screen's **CHECK** button runs the data validator
 and prints any problems to Godot's Output panel.

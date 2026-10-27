@@ -33,11 +33,11 @@ var action: String
 var preselect = null
 
 
-func _init(p_gurk: Gurk, p_action: String, p_preselect = null) -> void:
-	super(p_gurk, p_action, "CANCEL")
+func _init(p_ruik: Ruik, p_action: String, p_preselect = null) -> void:
+	super(p_ruik, p_action, "CANCEL")
 	action = p_action
 	preselect = p_preselect
-	game = gurk.game
+	game = ruik.game
 	can_select = []
 	var y := 3
 	var show_bag := false
@@ -55,7 +55,7 @@ func _init(p_gurk: Gurk, p_action: String, p_preselect = null) -> void:
 			show_bag = true
 		_:
 			message = "Choose an Adventurer"
-	add_label_centered(message, "#FFF", 0, y, 128, GurkScreen.FONT.font_height)
+	add_label_centered(message, "#FFF", 0, y, 128, RuikScreen.FONT.font_height)
 	y += 12
 	var index := 0
 	var select_index := -1
@@ -117,4 +117,4 @@ func item_highlighted(index: int, _item) -> void:
 
 
 func item_selected(index: int, _item) -> void:
-	gurk.pop_view(index)
+	ruik.pop_view(index)

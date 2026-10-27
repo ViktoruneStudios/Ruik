@@ -23,17 +23,17 @@ extends Node
 ##
 ## The original build ran GameCompiler.java to inline the map files into
 ## game.js. Here the same source files are read at startup instead:
-## data/gurkDemo.js (the `Data` object literal), data/icons.js (the `Icons`
+## data/ruikDemo.js (the `Data` object literal), data/icons.js (the `Icons`
 ## object literal) and data/maps/*.txt for every map declared as "@file.txt".
 ##
 ## Exported builds must include these non-resource files: in the export
 ## preset, add "data/*" to "Filters to export non-resource files/folders".
 
-const GAME_FILE := "res://data/gurkDemo.js"
+const GAME_FILE := "res://data/ruikDemo.js"
 const ICONS_FILE := "res://data/icons.js"
 const MAPS_DIR := "res://data/maps/"
 
-# Top-level fields of the game data (see data/gurkDemo.js for documentation).
+# Top-level fields of the game data (see data/ruikDemo.js for documentation).
 var icons: Dictionary = {}
 var levels: Array = []
 var splash_music: String = ""

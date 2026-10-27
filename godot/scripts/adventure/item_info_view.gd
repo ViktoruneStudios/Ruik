@@ -53,8 +53,8 @@ static func describe_target(spell: Dictionary) -> String:
 	return ""
 
 
-func _init(p_gurk: Gurk, p_item: Item) -> void:
-	super(p_gurk, "DONE")
+func _init(p_ruik: Ruik, p_item: Item) -> void:
+	super(p_ruik, "DONE")
 	item = p_item
 	var template := item.template
 	add_icon(template.icon, 3, 3)

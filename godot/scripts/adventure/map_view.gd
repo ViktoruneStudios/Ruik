@@ -92,12 +92,12 @@ var upgrades: Array = []
 var shadow_overlay: Texture2D
 
 
-func _init(p_gurk: Gurk) -> void:
-	super(p_gurk, p_gurk.game.map)
+func _init(p_ruik: Ruik) -> void:
+	super(p_ruik, p_ruik.game.map)
 	name = "MapView"
-	offset_x = -GurkScreen.HALF_UNIT
-	offset_y = -GurkScreen.HALF_UNIT
-	game = p_gurk.game
+	offset_x = -RuikScreen.HALF_UNIT
+	offset_y = -RuikScreen.HALF_UNIT
+	game = p_ruik.game
 	pos_x = game.x
 	pos_y = game.y
 	map_mode = false
@@ -106,10 +106,10 @@ func _init(p_gurk: Gurk) -> void:
 	set_button(9, "MAP")
 	set_button(3, "SAVE")
 	set_button(7, "QUESTS")
-	shadows = Util.create_2d_array(GurkScreen.WIN_SIZE, GurkScreen.WIN_SIZE, true)
+	shadows = Util.create_2d_array(RuikScreen.WIN_SIZE, RuikScreen.WIN_SIZE, true)
 	for y in range(-1, 2):
 		for x in range(-1, 2):
-			shadows[y + GurkScreen.CENTER_OFFSET][x + GurkScreen.CENTER_OFFSET] = false
+			shadows[y + RuikScreen.CENTER_OFFSET][x + RuikScreen.CENTER_OFFSET] = false
 	center_banner = true
 	move(0, 0)
 
@@ -137,12 +137,12 @@ func command(text: String) -> void:
 		"MAP", "NO MAP":
 			toggle_map()
 		"HEROES":
-			gurk.push_view(PartyView.new(gurk))
+			ruik.push_view(PartyView.new(ruik))
 		"QUESTS":
-			gurk.push_view(QuestView.new(gurk))
+			ruik.push_view(QuestView.new(ruik))
 		"SAVE":
 			Device.save_game(JSON.stringify(game.save_game()))
-			gurk.push_view(AlertView.new(gurk, Data.icons.party, "Game Saved", "Your game has been saved!", null))
+			ruik.push_view(AlertView.new(ruik, Data.icons.party, "Game Saved", "Your game has been saved!", null))
 		_:
 			process_feature(text)
 
@@ -152,8 +152,8 @@ func _opaque(x: int, y: int) -> bool:
 
 
 func check_visibility(x: int, y: int) -> void:
-	var dx := x - GurkScreen.CENTER_OFFSET
-	var dy := y - GurkScreen.CENTER_OFFSET
+	var dx := x - RuikScreen.CENTER_OFFSET
+	var dy := y - RuikScreen.CENTER_OFFSET
 	var yy := dy + pos_y
 	var xx := dx + pos_x
 	if yy >= 0 and yy < height and xx >= 0 and xx < width:
@@ -176,7 +176,7 @@ func check_visibility(x: int, y: int) -> void:
 
 func compute_shadows() -> void:
 	# Immediate surroundings are always visible
-	var c := GurkScreen.CENTER_OFFSET
+	var c := RuikScreen.CENTER_OFFSET
 	# Move in a spiral pattern, inductively computing visibility
 	for k in range(2, 5):
 		for i in range(0, k + 1):
@@ -195,11 +195,11 @@ func compute_shadows() -> void:
 
 func track_visited() -> void:
 	var dark := Util.truthy(map.get("dark"))
-	for y in GurkScreen.WIN_SIZE:
-		var yy := y + pos_y - GurkScreen.CENTER_OFFSET
+	for y in RuikScreen.WIN_SIZE:
+		var yy := y + pos_y - RuikScreen.CENTER_OFFSET
 		if yy >= 0 and yy < height:
-			for x in GurkScreen.WIN_SIZE:
-				var xx := x + pos_x - GurkScreen.CENTER_OFFSET
+			for x in RuikScreen.WIN_SIZE:
+				var xx := x + pos_x - RuikScreen.CENTER_OFFSET
 				if xx >= 0 and xx < width:
 					if not dark or not shadows[y][x]:
 						game.mark_visited(xx, yy)
@@ -211,11 +211,11 @@ func get_terrain(x: int, y: int) -> Dictionary:
 
 func do_draw() -> void:
 	var dark := Util.truthy(map.get("dark"))
-	for y in GurkScreen.WIN_SIZE:
-		var yy := y + pos_y - GurkScreen.CENTER_OFFSET
+	for y in RuikScreen.WIN_SIZE:
+		var yy := y + pos_y - RuikScreen.CENTER_OFFSET
 		if yy >= 0 and yy < height:
-			for x in GurkScreen.WIN_SIZE:
-				var xx := x + pos_x - GurkScreen.CENTER_OFFSET
+			for x in RuikScreen.WIN_SIZE:
+				var xx := x + pos_x - RuikScreen.CENTER_OFFSET
 				if xx >= 0 and xx < width:
 					if not dark or not shadows[y][x]:
 						draw_tile(get_terrain_icon(xx, yy), x, y)
@@ -224,7 +224,7 @@ func do_draw() -> void:
 							if feature != null and feature.get("icon") != null:
 								draw_tile(feature.icon, x, y)
 	var party_icon = Data.icons.ship if game.aboard != null else Data.icons.party
-	draw_tile(party_icon, GurkScreen.CENTER_OFFSET, GurkScreen.CENTER_OFFSET)
+	draw_tile(party_icon, RuikScreen.CENTER_OFFSET, RuikScreen.CENTER_OFFSET)
 	if dark:
 		screen.draw_image(shadow_overlay, 0, 0)
 	if map_mode:
@@ -282,14 +282,14 @@ func get_top_feature(x: int, y: int):
 
 func _play_map_music() -> void:
 	if Util.truthy(map.get("music")):
-		gurk.play_music(map.music)
+		ruik.play_music(map.music)
 
 
 func _play_boat_music() -> void:
 	if Util.truthy(map.get("boatMusic")):
-		gurk.play_music(map.boatMusic)
+		ruik.play_music(map.boatMusic)
 	else:
-		gurk.play_music(Data.boat_music)
+		ruik.play_music(Data.boat_music)
 
 
 func move(x: int, y: int) -> void:
@@ -303,7 +303,7 @@ func move(x: int, y: int) -> void:
 	var barrier = game.get_feature(tx, ty, "barrier")
 	if barrier != null:
 		var title = barrier.title if Util.truthy(barrier.get("title")) else "Cannot Pass"
-		gurk.push_view(AlertView.new(gurk, barrier.get("icon"), title, barrier.get("text"), null))
+		ruik.push_view(AlertView.new(ruik, barrier.get("icon"), title, barrier.get("text"), null))
 		return
 	var terrain := get_terrain(tx, ty)
 	if not (Util.truthy(terrain.get("passable")) or Util.truthy(terrain.get("shipPassable")) and (game.aboard != null or game.get_feature(tx, ty, "ship") != null)):
@@ -352,19 +352,19 @@ func move(x: int, y: int) -> void:
 							game.gold += found_gold
 							text += "\n\nYou find %d gold pieces!" % found_gold
 						var next = null if encounter.items.is_empty() else "treasure"
-						gurk.push_view(AlertView.new(gurk, feature.get("icon"), "Treasure", text, next, feature.get("altIcon")))
+						ruik.push_view(AlertView.new(ruik, feature.get("icon"), "Treasure", text, next, feature.get("altIcon")))
 					else:
-						gurk.play_combat_music()
-						gurk.push_view(AlertView.new(gurk, feature.get("icon"), "Encounter", feature.get("text"), "combat"))
+						ruik.play_combat_music()
+						ruik.push_view(AlertView.new(ruik, feature.get("icon"), "Encounter", feature.get("text"), "combat"))
 					return
 				"alert":
 					if real_move:
 						game.set_markers(feature.get("sets"))
-						gurk.push_view(AlertView.new(gurk, feature.get("icon"), feature.get("title"), feature.get("text"), "alert", feature.get("altIcon")))
+						ruik.push_view(AlertView.new(ruik, feature.get("icon"), feature.get("title"), feature.get("text"), "alert", feature.get("altIcon")))
 						return
 				"goal":
 					game.set_markers(feature.get("sets"))
-					gurk.push_view(AlertView.new(gurk, feature.get("icon"), feature.get("title"), feature.get("text"), "goal", feature.get("altIcon")))
+					ruik.push_view(AlertView.new(ruik, feature.get("icon"), feature.get("title"), feature.get("text"), "goal", feature.get("altIcon")))
 					return
 				_:
 					add_button_for_feature(feature, real_move)
@@ -375,8 +375,8 @@ func move(x: int, y: int) -> void:
 			encounter = game.create_encounter()
 			if encounter.creatures.size() > 0:
 				var text := "Your adventurers have been ambushed!" if encounter.ambushed else "Your adventurers have been attacked!"
-				gurk.play_combat_music()
-				gurk.push_view(AlertView.new(gurk, Data.icons.combat, "Encounter", text, "combat"))
+				ruik.play_combat_music()
+				ruik.push_view(AlertView.new(ruik, Data.icons.combat, "Encounter", text, "combat"))
 				return
 	draw()
 
@@ -413,23 +413,23 @@ func process_feature(_command: String) -> void:
 		"sign":
 			game.set_markers(feature.get("sets"))
 			var title = feature.get("title") if feature.get("title") != null else "Sign"
-			gurk.push_view(AlertView.new(gurk, feature.get("icon"), title, feature.get("text"), "sign", feature.get("altIcon")))
+			ruik.push_view(AlertView.new(ruik, feature.get("icon"), title, feature.get("text"), "sign", feature.get("altIcon")))
 		"transition":
-			gurk.push_view(ConfirmView.new(gurk, feature.get("icon"), "Go", feature.get("text"), "transition", null))
+			ruik.push_view(ConfirmView.new(ruik, feature.get("icon"), "Go", feature.get("text"), "transition", null))
 		"shop":
-			gurk.push_view(ItemView.new(gurk, null, ItemView.ACTION_BUY, feature))
+			ruik.push_view(ItemView.new(ruik, null, ItemView.ACTION_BUY, feature))
 		"temple":
 			if feature.cost > game.gold:
-				gurk.push_view(AlertView.new(gurk, feature.get("icon"), "Cannot Pay", "The priests of the temple demand a tribute of %d gold pieces, but you cannot pay it!" % feature.cost, null))
+				ruik.push_view(AlertView.new(ruik, feature.get("icon"), "Cannot Pay", "The priests of the temple demand a tribute of %d gold pieces, but you cannot pay it!" % feature.cost, null))
 			else:
-				gurk.push_view(ConfirmView.new(gurk, feature.get("icon"), "Tribute", "To heal the adventurers, the priests require a tribute of %d gold pieces, will you pay it?" % feature.cost, "heal", null))
+				ruik.push_view(ConfirmView.new(ruik, feature.get("icon"), "Tribute", "To heal the adventurers, the priests require a tribute of %d gold pieces, will you pay it?" % feature.cost, "heal", null))
 		"ship":
 			if feature.charter > game.gold:
-				gurk.push_view(AlertView.new(gurk, feature.get("icon"), "Cannot Pay", "The crew demand %d gold pieces to charter this vessel, but you cannot pay it!" % feature.charter, null))
+				ruik.push_view(AlertView.new(ruik, feature.get("icon"), "Cannot Pay", "The crew demand %d gold pieces to charter this vessel, but you cannot pay it!" % feature.charter, null))
 			else:
-				gurk.push_view(ConfirmView.new(gurk, feature.get("icon"), "Charter Ship", "Will you pay the crew %d gold pieces to charter this ship?" % feature.charter, "charter", null))
+				ruik.push_view(ConfirmView.new(ruik, feature.get("icon"), "Charter Ship", "Will you pay the crew %d gold pieces to charter this ship?" % feature.charter, "charter", null))
 		"dispatch":
-			gurk.push_view(ConfirmView.new(gurk, feature.get("icon"), feature.get("title"), feature.get("text"), "dispatch", null, feature.get("altIcon")))
+			ruik.push_view(ConfirmView.new(ruik, feature.get("icon"), feature.get("title"), feature.get("text"), "dispatch", null, feature.get("altIcon")))
 
 
 func process_result(result) -> void:
@@ -452,11 +452,11 @@ func process_result(result) -> void:
 			_victory()
 		"levelup":
 			var next_action = "treasure" if encounter.items.size() > 0 else null
-			gurk.push_view(LevelUpView.new(gurk, upgrades, next_action))
+			ruik.push_view(LevelUpView.new(ruik, upgrades, next_action))
 		"treasure":
-			gurk.push_view(ItemView.new(gurk, null, ItemView.ACTION_GIVE, encounter.items))
+			ruik.push_view(ItemView.new(ruik, null, ItemView.ACTION_GIVE, encounter.items))
 		"combat":
-			gurk.push_view(CombatView.new(gurk, game.get_combat_map(), gurk.image_processor, encounter.creatures, encounter.ambushed))
+			ruik.push_view(CombatView.new(ruik, game.get_combat_map(), ruik.image_processor, encounter.creatures, encounter.ambushed))
 		"heal":
 			var temple = get_top_feature(pos_x, pos_y)
 			game.gold -= temple.cost
@@ -476,10 +476,10 @@ func process_result(result) -> void:
 			game.transition_to(start.map, start.x, start.y)
 			set_map(start.map, start.x, start.y)
 			move(0, 0)
-			gurk.push_view(AlertView.new(gurk, Data.icons.death, "Defeat", "You have been defeated! As blackness closes in, a strange feeling comes over the adventurers...", null))
+			ruik.push_view(AlertView.new(ruik, Data.icons.death, "Defeat", "You have been defeated! As blackness closes in, a strange feeling comes over the adventurers...", null))
 		"debug1":
 			game.players[0].take_damage(3)
-			var image := gurk.image_processor.rotate(Data.icons.death, ImageProcessor.LEFT)
+			var image := ruik.image_processor.rotate(Data.icons.death, ImageProcessor.LEFT)
 			fly(Data.icons.death, 1, 7, 7, 1, 75, func(): pass, image)
 
 
@@ -518,4 +518,4 @@ func _victory() -> void:
 		for upgrade in upgrades:
 			text += "\n%s gained a level!" % upgrade.player.character.name
 		action = "levelup"
-	gurk.push_view(AlertView.new(gurk, icon, "Victory", text, action))
+	ruik.push_view(AlertView.new(ruik, icon, "Victory", text, action))

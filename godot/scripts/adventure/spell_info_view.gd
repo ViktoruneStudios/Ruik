@@ -26,8 +26,8 @@ var player
 var spell: Dictionary
 
 
-func _init(p_gurk: Gurk, p_player, p_spell: Dictionary) -> void:
-	super(p_gurk, "DONE")
+func _init(p_ruik: Ruik, p_player, p_spell: Dictionary) -> void:
+	super(p_ruik, "DONE")
 	player = p_player
 	spell = p_spell
 	var amount: Dictionary = player.get_spell_range(spell)

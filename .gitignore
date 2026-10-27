@@ -47,3 +47,5 @@ Resources/Configuration/Private.xcconfig
 .DS_Store
 .pid_file
 .sass-cache
+
+.ruik_tmp/
