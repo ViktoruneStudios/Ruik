@@ -1,0 +1,94 @@
+class_name View
+extends RefCounted
+## Base class for every screen of the game. A view draws itself onto the
+## GurkScreen and declares which of the nine buttons are active.
+
+const LEFT := "1"
+const UP := "2"
+const RIGHT := "3"
+const DOWN := "4"
+
+## buttons[y][x] is the button's text, or null when disabled.
+var buttons: Array = []
+var name := "No Name"
+var screen: GurkScreen
+var gurk: Gurk
+
+
+func _init(p_screen: GurkScreen, p_gurk: Gurk) -> void:
+	screen = p_screen
+	gurk = p_gurk
+	buttons = [[null, null, null], [null, null, null], [null, null, null]]
+
+
+## Called with the result of a view that was pushed on top of this one.
+func process_result(_result) -> void:
+	pass
+
+
+func draw() -> void:
+	screen.clear()
+	do_draw()
+	screen.draw_screen()
+
+
+func do_draw() -> void:
+	pass
+
+
+func do_layout() -> void:
+	pass
+
+
+func command(_text: String) -> void:
+	pass
+
+
+func set_buttons(grid: ButtonGrid) -> void:
+	grid.clear()
+	for y in 3:
+		for x in 3:
+			if buttons[y][x] != null:
+				grid.set_button_by_position(x, y, buttons[y][x])
+
+
+func enable_movement() -> void:
+	buttons[1][0] = LEFT
+	buttons[0][1] = UP
+	buttons[1][2] = RIGHT
+	buttons[2][1] = DOWN
+	if gurk.is_current_view(self):
+		set_buttons(gurk.button_grid)
+
+
+static func coords(key_num: int) -> Vector2i:
+	key_num -= 1
+	return Vector2i(key_num % 3, key_num / 3)
+
+
+func clear_button(key_num: int) -> void:
+	var c := View.coords(key_num)
+	buttons[c.y][c.x] = null
+	if gurk.is_current_view(self):
+		gurk.button_grid.disable_button_by_position(c.x, c.y)
+
+
+func clear_all_buttons() -> void:
+	for i in range(1, 10):
+		clear_button(i)
+
+
+func set_button(key_num: int, text: String) -> void:
+	var c := View.coords(key_num)
+	buttons[c.y][c.x] = text
+	if gurk.is_current_view(self):
+		gurk.button_grid.set_button_by_position(c.x, c.y, text)
+
+
+func get_text_width(text: String) -> int:
+	return GurkScreen.FONT.get_width(text)
+
+
+## Stringifies possibly-missing data fields the way the UI needs them.
+static func s(value) -> String:
+	return "" if value == null else str(value)

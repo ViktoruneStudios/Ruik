@@ -10,6 +10,10 @@ Included is a playable and fun demo game. Go here to play it: http://pents90.git
 
 This engine was written to make Gurk III, an RPG for [Android](http://play.google.com/store/apps/details?id=com.larvalabs.gurk3) and [iOS](http://itunes.apple.com/us/app/gurk-iii-the-8-bit-rpg/id685128493?mt=8).
 
+## Godot Version
+
+A Godot 4 port of the engine and demo game lives in the `godot` folder. Import `godot/project.godot` in Godot 4.3 or newer and run it. See `godot/README.md` for details.
+
 ## Philosophy
 
 The goal of this engine is to use a very simple push-button approach to play, as opposed to complex gestures and menus.
