@@ -8,12 +8,16 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Ruik"
 config/description="E.B.U.R.P. engine and demo game, ported from CoffeeScript to Godot."
 run/main_scene="res://main.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [autoload]
 
@@ -21,17 +25,17 @@ Data="*res://scripts/core/data.gd"
 
 [display]
 
-window/size/viewport_width=300
-window/size/viewport_height=136
-window/size/window_width_override=900
-window/size/window_height_override=408
+window/size/viewport_width=160
+window/size/viewport_height=256
+window/size/window_width_override=480
+window/size/window_height_override=768
 window/stretch/mode="viewport"
-window/stretch/aspect="keep"
 window/stretch/scale_mode="integer"
+window/handheld/orientation=1
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.07, 0.07, 0.07, 1)

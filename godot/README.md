@@ -84,8 +84,10 @@ and `settings.cfg`).
 
 ## Differences from the web version
 
-- Rendering uses the 1x art in a 300x136 window, scaled up by whole multiples
-  (3x by default), with the buttons beside the screen instead of below it.
+- Portrait, like the phone versions: the screen on top and the buttons below.
+  It uses the 1x art at 160x256, scaled up by whole multiples (3x, 480x768,
+  by default). Resizing the window adds borders but never changes the layout,
+  and on phones the orientation is locked to portrait.
 - Sound and music start on. The web page started muted until you clicked "on".
 - **CHECK** on the title screen also shows a confirmation, since there is no
   browser console.

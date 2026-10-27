@@ -23,8 +23,10 @@ extends Control
 ## Entry point: builds the screen and button grid, owns the view stack, and
 ## handles input, sound, music and timers.
 
-const SCREEN_POSITION := Vector2(4, 4)
-const GRID_POSITION := Vector2(136, 11)
+# Portrait, like the phone versions: the screen on top, the buttons below.
+# The 160x256 base resolution is set in project.godot.
+const SCREEN_POSITION := Vector2(16, 6)
+const GRID_POSITION := Vector2(0, 140)
 const SOUND_VOLUME_DB := -12.0 # The web version played effects at 25% volume.
 
 var stack: Array = []
